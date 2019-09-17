@@ -2,11 +2,11 @@
 
 Bluetooth survrillance systems
 
-![](2/0.png)
+![](0.png)
 
 Slide1 Whate id bluetooth?
 
-![](2/1.png)
+![](1.png)
 
 Bluetooth is a standart wire replacement technology designed for low power consumption.
 There are three widely used bluetooth classes. 
@@ -17,4 +17,24 @@ Class 2 is the most popular among electronic devices that utilises bluetooth tec
 
 Slide2 How bluetooth works?
 
-You can see sequence diagramm for bluetooth handshake.
+![](2.png)
+
+You can see sequence diagramm for bluetooth handshake. Master-slave notation is used for actor identification. Master is a primery device, slave is a pereferal device, for example, your headphones. Please note "SMP Pairing request" and "SMP Pairing responce"
+
+![](3.png)
+
+There are two kind of pairing requests: direct and anonimous. Basicly, direct is used if you already know device, anonimous otherwise.
+For anonimous pairing requests general anonimous addres is broadcasted. You can see this address aat the top.
+
+![](4.png)
+
+![](5.png)
+
+![](6.png)
+
+![](7.png)
+
+![](8.png)
+
+![](9.png)
+
