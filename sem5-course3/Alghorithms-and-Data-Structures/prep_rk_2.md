@@ -1,3 +1,7 @@
+```
+Пустое учение-это дерево. [Иеремия 10:8]
+```
+
 # Постройте, добавьте, удалите ...
 
 - [Splay](http://www.cs.armstrong.edu/liang/animation/web/SplayTree.html)
