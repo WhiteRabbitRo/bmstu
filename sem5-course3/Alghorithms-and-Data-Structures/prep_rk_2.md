@@ -48,3 +48,7 @@ When one tree is significantly larger than the other (m ≪ n), the bound is app
 - Метод предоплаты (метод бухгалтерского учёта).
 
 [more](https://neerc.ifmo.ru/wiki/index.php?title=Амортизационный_анализ)
+
+# если больше нет надежды
+
+[кнут](https://youtu.be/JPpk-1btGZk)
