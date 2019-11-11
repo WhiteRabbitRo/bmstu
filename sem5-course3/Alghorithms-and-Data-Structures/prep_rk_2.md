@@ -38,3 +38,11 @@ When the two trees are similar in size (m ≈ n), the bound is approximately O(m
 When one tree is significantly larger than the other (m ≪ n), the bound is approximately O(log n).
  ```
  [algorithm](https://vk.com/away.php?to=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRed%25E2%2580%2593black_tree%23Set_operations_and_bulk_operations&cc_key=)
+
+# Методы амартизационного анализа
+
+Амортизационный анализ использует следующие методы:
+
+- Метод усреднения (метод группового анализа).
+- Метод потенциалов.
+- Метод предоплаты (метод бухгалтерского учёта).
