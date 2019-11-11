@@ -56,5 +56,5 @@ When one tree is significantly larger than the other (m ≪ n), the bound is app
 # если больше нет надежды
 
 ну такой себе на самом деле ток:
-[кнут](https://youtu.be/JPpk-1btGZk)
-[кнут в костюме санты рассказывает про деревья](https://youtu.be/axUgEAgrSB8)
+-[кнут](https://youtu.be/JPpk-1btGZk)
+-[кнут в костюме санты рассказывает про деревья](https://youtu.be/axUgEAgrSB8)
