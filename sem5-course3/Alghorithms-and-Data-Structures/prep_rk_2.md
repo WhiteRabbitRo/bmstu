@@ -28,3 +28,13 @@
 А затем удаляем в обратном порядке: 10, 9, 8
 ```
 ![спасибо, ася](rk2/avs_black_rbt_fin.jpg)
+
+ # Слияние двух произвольных красно черных деревьев
+ 
+ ```
+ You can merge two red-black trees in time O(m log(n/m + 1)) where n and m are the input sizes and, WLOG, m ≤ n. Notice that this bound is tighter than O(m+n). Here's some intuition:
+
+When the two trees are similar in size (m ≈ n), the bound is approximately O(m) = O(n) = O(n + m).
+When one tree is significantly larger than the other (m ≪ n), the bound is approximately O(log n).
+ ```
+ [algorithm](https://vk.com/away.php?to=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRed%25E2%2580%2593black_tree%23Set_operations_and_bulk_operations&cc_key=)
