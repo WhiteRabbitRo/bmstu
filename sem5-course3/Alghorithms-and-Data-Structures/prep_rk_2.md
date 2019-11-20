@@ -20,7 +20,7 @@
 
 # Постройте, добавьте, удалите ...
 
-- [Splay](http://www.cs.armstrong.edu/liang/animation/web/SplayTree.html)
+(передположительно не верно)- [Splay](http://www.cs.armstrong.edu/liang/animation/web/SplayTree.html)
 - [AVL](http://www.cs.armstrong.edu/liang/animation/web/AVLTree.html)
 - [Binary Heap](http://btv.melezinek.cz/binary-heap.html)
 - [Bin Search Tree](http://btv.melezinek.cz/binary-search-tree.html)
