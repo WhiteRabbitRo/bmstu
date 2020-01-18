@@ -1,0 +1,499 @@
+import re
+import fileinput
+
+# input is a file
+# im looping for all lines in input file
+# in that line im looping for all matches for regex
+# regex explanation:
+# one or zero "-" following by one or more digits
+# all mathes in line sum
+# than sums for each line sum
+
+def sum_linde():
+    return sum(sum(int(c) for c in re.findall(r'[-]?\d+', line)) for line in fileinput.input())
+print(sum_linde())
+
+import fileinput
+
+class Steck:
+    def __init__(self):
+        self.size = -1
+        self.head = 0
+        # self.data = []
+    def set_size(self, _size):
+        if self.size == -1:
+            self.size=_size
+            self.data = [0]*self.size
+            # now memory for array sets only ones
+        else:
+            print ("error")
+    def print(self):
+        if self.size == -1:
+            print ("error")
+            return
+        if self.head == 0:
+            print("empty")
+        else:
+            # print(*self.data, sep = " ")
+
+            # im sorry for inconvinience
+            # i fixed linear time for element "delition"
+            # this mess came in the place of previously used
+            # neat expression so empty elements wount print
+            for x in range(self.head):
+                print (self.data[x], end= "")
+                if x!=self.head-1:
+                    print (" ", end = "")
+                else:
+                    print ("")
+    # lists could be treated as stacks
+    # in python but i thought it was a
+    # cheat to use pop method
+    def pop(self):
+        if self.size == -1:
+            print ("error")
+            return
+        if self.head == 0:
+            print("underflow")
+        else:
+            print(self.data[self.head-1])
+            # now pop is linear
+            # del self.data[self.head-1]
+            self.head -=1
+    def push(self, _new):
+        if self.size == -1:
+            print ("error")
+            return
+        if self.head != self.size:
+            self.data[self.head] = _new
+            self.head+=1
+        else:
+            print("overflow")
+
+a = Steck()
+
+# input is "file"
+for line in fileinput.input():
+    length = len(line.split(' '))
+    splitee = line.strip('\n').split(' ')
+    if line == "\n":
+        continue
+    if length == 1: # for ops only cases
+        if splitee[0] == "pop":
+            a.pop()
+        if splitee[0] == "print":
+            a.print()
+        if splitee[0] != "print" and splitee[0] != "pop":
+            print("error")
+    if length == 2: # for op+operand cases
+        if splitee[0] == "push":
+                a.push((splitee[1]))
+        if splitee[0] == "set_size":
+            if splitee[1].isdigit():
+                a.set_size(int(splitee[1]))
+            else:
+                print ("error")
+        if splitee[0] != "set_size" and splitee[0] != "push":
+            print("error")
+    if length != 1 and length != 2:
+        print("error")
+        
+import sys
+class Queue:
+    def __init__(self):
+        self.size = -1
+        self.head = 0
+        self.data = []
+    def set_size(self, _size, file):
+        if self.size == -1:
+            self.size=_size
+        else:
+            file.write ("error\n")
+    def print(self, file):
+        if self.size == -1:
+            file.write ("error\n")
+            return
+        if self.head == 0:
+            file.write("empty\n")
+        else:
+            i = 0
+            file.write(" ".join(self.data)+"\n")
+            # i think im starting to miss ruby
+            # " " - delimeter
+            # <delimeter>.join(["a", "b"]) -> a<delimeter>b
+    def pop(self, file):
+        if self.size == -1:
+            file.write ("error\n")
+            return
+        if self.head == 0:
+            file.write("underflow\n")
+        else:
+            file.write(self.data[0])
+            file.write("\n")
+            del self.data[0]
+            self.head -=1
+    def push(self, _new, file):
+        if self.size == -1:
+            file.write("error\n")
+            return
+        if self.head != self.size:
+            self.data.append(_new)
+            self.head+=1
+        else:
+            file.write("overflow\n")
+
+def _print(line, file):
+    file.write(line)
+
+if len(sys.argv) > 1 and len(sys.argv) <4:
+    input = open("%s" % sys.argv[1], "r")
+    output = open("%s" % sys.argv[2], "a+")
+    a = Queue()
+    linewise = input.readlines()
+    for line in linewise:
+        length = len(line.split(' '))
+        splitee = line.strip('\n').split(' ')
+        if line == "\n":
+            continue
+        if length == 1: # for ops only cases
+            if splitee[0] == "pop":
+                a.pop(output)
+            if splitee[0] == "print":
+                a.print(output)
+            if splitee[0] != "print" and splitee[0] != "pop":
+                output.write("error\n")
+        if length == 2: # for op+operand cases
+            if splitee[0] == "push":
+                    a.push((splitee[1]), output)
+            if splitee[0] == "set_size":
+                if splitee[1].isdigit():
+                    a.set_size(int(splitee[1]), output)
+                else:
+                    output.write("error\n")
+            if splitee[0] != "set_size" and splitee[0] != "push":
+                output.write("error\n")
+        if length != 1 and length != 2:
+            output.write("error\n")
+
+# knapsack
+
+#
+# so guys said i need to optimize by getting greatest common denominator
+#
+
+#
+# Remark: GCD - Greatest Common Denominator
+#
+
+import re
+import sys
+
+class Knapsack_problem:
+    __knapsack_size = 0
+    __stuff = []
+    __stuff_count=0
+
+    __stuff_gcd = []
+    __table_of_options = []
+    __overall_gcd = 0
+
+    __otvet_costs = 0
+    __otvet_wheight = 0
+    __otvet_elements = []
+
+    def solve(self):
+        self.wheights_gcd_normalisation()
+        self.calc_solution_matrix()
+        self.find_ovtet_elements_in_table_of_options()
+        self.print_formatted_output()
+
+    def append_stuff(self, stuff_entity):
+        self.__stuff.append(stuff_entity)
+        self.__stuff_count-=-1
+
+    def set_knapsack_size(self, knapsack_size):
+        self.__knapsack_size = knapsack_size
+
+    def find_overall_gcd(self):
+        self.__overall_gcd = int(max(self.__stuff)[0])
+        # optimization:
+        # GCD of all wheights is a Min of GCD(wheights[i],
+        # wheights[i+1]) for all i = 0, N-1
+        for i in range(self.__stuff_count-1):
+            if self.__overall_gcd > self.calc_greatest_common_denominator(self.__stuff[i][0], self.__stuff[i+1][0]) :
+                self.__overall_gcd = self.calc_greatest_common_denominator(self.__stuff[i][0], self.__stuff[i+1][0])
+
+    def wheights_gcd_normalisation(self):
+        #sick optimization method, very nice, 10/10, would recomend
+        self.find_overall_gcd()
+        self.__knapsack_size = int(self.__knapsack_size/self.__overall_gcd)
+        #print (self.__stuff)
+        self.__stuff = [[int(int(x[0]) / self.__overall_gcd),x[1]] for x in self.__stuff]
+        #print (self.__stuff)
+
+    def calc_greatest_common_denominator(self, a, b): #euclidean algorithm
+        a = int(a)
+        b = int(b)
+        while (a):
+            b, a = a, b % a
+        return b
+
+    def calc_solution_matrix(self):
+#
+#A = []
+# omfg https://stackoverflow.com/questions/4056768/how-to-declare-array-of-zeros-in-python-or-an-array-of-a-certain-size/4056782
+# https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list
+# i just wanted an array but no python wount let me do it cos why would it be nice to me
+# i hate it
+# i miss my ruby
+#self.__table_of_options = [[0] * (self.__knapsack_size+1)]*(self.__stuff_count+1)
+# i spent so much time trouleshooting this thing i hate programming gotta listen that intro in datascience coursera thing
+#
+# recap:
+#>>> a = [[0] * 4] * 5
+#>>> b = [[0 for i in range(4)] for j in range(5)]
+#>>> a == b
+#True
+#>>> a[1][1]=2
+#>>> b[1][1]=2
+#>>> a == b
+#False
+#>>> b
+#[[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+#>>> a
+#[[0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0]]
+#
+        self.__table_of_options = [[0 for i in range(self.__knapsack_size + 1)] for j in range(len(self.__stuff) + 1)]
+        #print (A == self.__table_of_options)
+        for i in range(1, self.__stuff_count + 1 ):
+            for j in range(1, self.__knapsack_size + 1 ):
+                if int(self.__stuff[i - 1][0]) > j:
+                    #print (self.__table_of_options[i][j])
+                    self.__table_of_options[i][j] = self.__table_of_options[i - 1][j]
+                else:
+                    self.__table_of_options[i][j] = max(self.__table_of_options[i - 1][j - int(self.__stuff[i - 1][0])] + int(self.__stuff[i - 1][1]), self.__table_of_options[i - 1][j])
+        #print (self.__table_of_options)
+        self.__otvet_wheight = self.__table_of_options[self.__stuff_count][self.__knapsack_size]
+
+    def find_ovtet_elements_in_table_of_options(self):
+        i = self.__stuff_count
+        j = self.__knapsack_size
+        while (self.__table_of_options[i][j]):
+            if not self.__table_of_options[i][j] == self.__table_of_options[i-1][j]:
+                self.__otvet_elements.append(i)
+                j -= int(self.__stuff[i-1][0])
+            i -= 1
+        # print (self.__otvet_elements)
+    def print_formatted_output(self):
+        # format:
+        # <wheight> <costs>
+        # <elements in increasing order>
+
+        self.__otvet_wheight = 0
+        for i in self.__otvet_elements:
+            self.__otvet_wheight += int (self.__stuff[i-1][0])
+        self.__otvet_wheight *= self.__overall_gcd
+
+        self.__otvet_costs = self.__table_of_options[self.__stuff_count][self.__knapsack_size]
+
+        self.__otvet_elements = sorted(self.__otvet_elements)
+
+        print ("%d %d" % (self.__otvet_wheight, self.__otvet_costs))
+        for i in self.__otvet_elements:
+            print (i)
+
+knapsack_solution = Knapsack_problem()
+size_init = False
+
+for line in sys.stdin:
+	parser = re.findall(r'\d+', line)
+	if not len(parser) == 0:
+	    if size_init == True:
+		    knapsack_solution.append_stuff(parser)
+	    else:
+		    knapsack_solution.set_knapsack_size(int(parser[0]))
+		    size_init = True
+
+knapsack_solution.solve()
+
+import re
+import sys
+# # NOTE: python -m cProfile -s cumtime <name>
+
+def most_likely(input):
+    solution_list = []
+    while (input != 0):
+        #print (".")
+        if (input % 2 == 0):
+            input /=2
+            solution_list.append("dbl")
+        if (input == 1):
+            solution_list.append("inc")
+            input -= 1
+        if (input % 2 == 1):
+            next = re.findall(r'\d',bin(int(input+1)))
+            prev = re.findall(r'\d',bin(int(input-1)))
+            wheight_next = len([x for x in next if x == "1"])
+            wheight_prev = len([x for x in prev if x == "1"])
+            if (wheight_next == wheight_prev):
+                input -= 1
+                solution_list.append("inc")
+            if (wheight_next < wheight_prev):
+                solution_list.append("dec")
+                input = input + 1
+            if (wheight_next > wheight_prev):
+                input = input - 1
+                solution_list.append("inc")
+    solution_list.reverse()
+    return solution_list
+def some_exeptional_cases(input):
+    #print(",")
+    solution_list = []
+    clear = False
+    while (input != 0):
+        if (input % 2 == 0):
+            input=input /2 # input>>1 seems to be slower
+            solution_list.append("dbl")                         # s2 24 +dbl
+        if (input == 1):
+            solution_list.append("inc")
+            input -= 1
+        if (input % 2 == 1):
+            next = re.findall(r'\d', bin(int(input+1)))              #1 1000         # s3 1100
+            prev = re.findall(r'\d', bin(int(input-1)))              #1 0110         # s3 1001
+            if (clear == False):                                # f             # t
+                next.pop(0)                                     # 1000
+                prev.pop(0)                                     # 0110
+                clear = True                                    # t
+            wheight_next = len([x for x in next if x == "1"])   # 1             # 2
+            wheight_prev = len([x for x in prev if x == "1"])   # 2             # 2
+            if (wheight_next < wheight_prev):                   # +
+                solution_list.append("dec")                     # +dec, input 24
+                input += 1
+            if (wheight_next > wheight_prev):
+                input -= 1
+                solution_list.append("inc")
+            if (wheight_next == wheight_prev):                                  # teq
+                for i in range(int(len(next)/2),int(len(next)-1)):                        # 2..4
+                    if (int(next[i]) < int(prev[i])) or (len(prev)<len(next)):
+                        solution_list.append("inc")
+                        input -= 1
+                        break
+                    if (int(next[i]) > int(prev[i])):
+                        solution_list.append("dec")
+                        input += 1
+                        break
+    solution_list.reverse()
+    return solution_list
+input = 0
+for line in sys.stdin:
+    parser = re.findall(r'\d+',line)
+    input = int(parser.pop())
+
+solution_list = []
+solution_list_alternative = []
+solution_list = some_exeptional_cases(input)
+solution_list_alternative = most_likely(input)
+
+
+
+if (len(solution_list)<len(solution_list_alternative)):
+    for i in solution_list:
+        print(i)
+if (len(solution_list)>len(solution_list_alternative)):
+    for i in solution_list_alternative:
+        print(i)
+if (len(solution_list)==len(solution_list_alternative)):
+    optimisation_ = solution_list.count("dbl") - solution_list.count("dec")
+    optimisation_a = solution_list_alternative.count("dbl") - solution_list_alternative.count("dec")
+    if (optimisation_a >= optimisation_):
+        for i in solution_list_alternative:
+            print(i)
+    else:
+        for i in solution_list:
+            print(i)
+#print(solution_list)
+#print(solution_list_alternative)
+
+import re
+import sys
+
+def damerau_levenshtein_distance(s1, s2):
+    d = {}
+    lenstr1 = len(s1)
+    lenstr2 = len(s2)
+    for i in range(-1,lenstr1+1):
+        d[(i,-1)] = i+1
+    for j in range(-1,lenstr2+1):
+        d[(-1,j)] = j+1
+
+    for i in range(lenstr1):
+        for j in range(lenstr2):
+            if s1[i] == s2[j]:
+                cost = 0
+            else:
+                cost = 1
+            d[(i,j)] = min(
+                           d[(i-1,j)] + 1, # deletion
+                           d[(i,j-1)] + 1, # insertion
+                           d[(i-1,j-1)] + cost, # substitution
+                          )
+            if i and j and s1[i]==s2[j-1] and s1[i-1] == s2[j]:
+                d[(i,j)] = min (d[(i,j)], d[i-2,j-2] + cost) # transposition
+    return d[lenstr1-1,lenstr2-1]
+
+
+class DLD:
+    __d_size = 0
+    __d = []
+    def set_d_size(self, size):
+        self.__d_size = size
+    def get_d_size(self):
+        return self.__d_size
+    def append_d(self, word):
+        self.__d.append(word)
+    def sort_d(self):
+        self.__d.sort(key=str.lower)
+    def evaluate(self, word):
+        results = []
+        ok = False
+        for i in range(self.__d_size):
+            dist = damerau_levenshtein_distance(self.__d[i], word.lower())
+            if dist == 1:
+                results.append(self.__d[i])
+            if dist == 0:
+                ok = True
+                break
+        if ok:
+            print ("%s - ok" % word)
+        elif len(results) > 0:
+            solution = ", ".join(results)
+            print ("%s -> %s" % (word, solution))
+        else:
+            print ("%s -?" % word)
+
+
+size_init = False
+d_count = 0
+i_have_no_idea_how_to_name_stuff = DLD()
+
+for line in sys.stdin:
+    if not size_init:
+        parser = re.findall(r'\d+', line)
+        if not len(parser) == 0:
+            #print (line)
+            i_have_no_idea_how_to_name_stuff.set_d_size(int(line))
+            size_init = True
+    else:
+        res = re.findall(r'.+',line)
+        if not len(res) == 0:
+            if d_count <= i_have_no_idea_how_to_name_stuff.get_d_size()-1:
+                d_count-=-1
+                i_have_no_idea_how_to_name_stuff.append_d(res[0].lower())
+            else:
+                i_have_no_idea_how_to_name_stuff.evaluate(res[0])
+            if d_count == i_have_no_idea_how_to_name_stuff.get_d_size():
+                i_have_no_idea_how_to_name_stuff.sort_d()
+
+#
+# Remark: .rstrip() slices \n
+#
